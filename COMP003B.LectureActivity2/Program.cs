@@ -18,13 +18,21 @@ namespace COMP003B.LectureActivity2
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            // Middleware sequence
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
+
+            app.UseMiddleware<COMP003B.LectureActivity2.Middleware.RequestLoggingMiddleware>();
+
+            app.UseWelcomePage("/welcome");
+
             app.UseRouting();
 
             app.UseAuthorization();
 
             app.MapStaticAssets();
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}")
